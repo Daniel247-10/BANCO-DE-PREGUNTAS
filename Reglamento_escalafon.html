@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Ascenso - Normativa Básica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Simulador: Normativa Básica del Magisterio</h1>
+        <p>Estudio interactivo: Escalafón, Faltas y Sanciones, y Protocolos</p>
+    </header>
+
+    <main id="quiz-container"></main>
+
+    <script src="quiz-behavior.js"></script>
+    <script>
+        const quizData = [
+            // I. REGLAMENTO DE ESCALAFÓN
+            { q: "1. ¿Cuál es la definición exacta y el alcance que la norma otorga al Escalafón Nacional?", options: ["a) Registro manual y descentralizado de méritos académicos.", "b) Registro sistemático, permanente y centralizado de los datos personales y profesionales.", "c) Base de datos digital exclusiva para títulos urbanos.", "d) Catálogo nacional de cargos jerárquicos."], correct: 1, retro: "Es el instrumento técnico-administrativo centralizado de datos profesionales del magisterio." },
+            { q: "2. Según el artículo 2, ¿cuáles son los objetivos de regular el ingreso y valorar los méritos?", options: ["a) Limitar el ingreso de extranjeros.", "b) Regular ingreso, garantizar continuidad, escalas de categoría/jerarquía y recompensar méritos.", "c) Establecer jubilación obligatoria a los 50 años.", "d) Definir sanciones penales por calendario."], correct: 1, retro: "Busca estimular la preparación mediante el reconocimiento de la trayectoria." },
+            { q: "3. ¿Cuál es el requisito para que un maestro interino sea incorporado definitivamente como 'titular'?", options: ["a) Egresar de una Escuela Normal del Estado.", "b) 5 años de servicio y examen distrital.", "c) 10 años de servicios y aprobar examen de capacidad para título por R.S.", "d) Título de médico/abogado y 6 años de docencia."], correct: 2, retro: "La titularidad para interinos requiere una década de servicio y evaluación." },
+            { q: "4. Según el artículo 11, ¿qué situación constituye una prohibición absoluta para ingresar al magisterio?", options: ["a) Padecer enfermedades graves inhabilitantes, vida inmoral o sentencia penal ejecutoriada.", "b) No haber cumplido el servicio militar.", "c) Reprobar dos veces el examen de ascenso.", "d) Ser extranjero con contrato específico."], correct: 0, retro: "La norma impide el ingreso por salud inhabilitante o antecedentes penales graves." },
+            { q: "5. ¿Qué condiciones de tiempo y evaluación debe cumplir un interino para inscribirse en el Escalafón?", options: ["a) Inscripción inmediata con bachillerato.", "b) 5 años de servicio, ejercicio satisfactorio, examen de idoneidad e instrucción mínima.", "c) 10 años ininterrumpidos y documentos militares.", "d) Examen técnico al 2do año rural."], correct: 1, retro: "Se requiere un quinquenio de ejercicio evaluado satisfactoriamente." },
+            { q: "6. ¿Cómo se definen las dos proyecciones complementarias de la carrera docente?", options: ["a) Ascensos por antigüedad y promociones por necesidad.", "b) Jerarquía depende de méritos/necesidad; Categoría depende de antigüedad.", "c) Basadas solo en la Ficha de Calificación anual.", "d) Exámenes obligatorios cada 5 años."], correct: 1, retro: "La jerarquía valora la función y el mérito; la categoría el tiempo de servicio." },
+            { q: "7. ¿Cuál es el puntaje máximo asignado a 'Estudios y títulos profesionales'?", options: ["a) Hasta 50 puntos.", "b) Hasta 100 puntos, distribuidos según formación y postgrados.", "c) Hasta 200 puntos por Doctorado.", "d) No tiene límite fijo."], correct: 1, retro: "El sistema valora la formación académica con un techo de 100 puntos." },
+            { q: "8. ¿Cuántos puntos otorga el Escalafón por el grado de 'Doctor en Pedagogía'?", options: ["a) 10 puntos.", "b) 15 puntos.", "c) 20 puntos.", "d) 5 puntos adicionales."], correct: 2, retro: "Es una de las asignaciones más altas para incentivar la superación profesional." },
+            { q: "9. ¿Cómo se califica numéricamente la antigüedad en servicios efectivos?", options: ["a) 1 punto por año.", "b) 1 punto por cada trimestre de trabajo.", "c) 0.5 puntos por mes (máximo 50).", "d) 10 puntos fijos por quinquenio."], correct: 1, retro: "La antigüedad se mide trimestralmente para el cómputo de méritos." },
+            { q: "10. ¿Cuál es el beneficio de antigüedad para normalistas que trabajan en fronteras?", options: ["a) 3 años por cada año efectivo.", "b) Por 2 años de servicio, derecho al cómputo de 4 años para jubilación/méritos.", "c) Bono del 50% sin afectar el récord.", "d) Ascenso automático cada 2 años."], correct: 1, retro: "Es un estímulo de doble cómputo por trabajar en zonas limítrofes." },
+            { q: "11. ¿Cuál es la sanción de demérito por 'Abandono de funciones'?", options: ["a) 1 a 5 puntos.", "b) 1 a 10 puntos.", "c) 1 a 20 puntos.", "d) 5 a 15 puntos y suspensión."], correct: 2, retro: "Es considerada una de las faltas de asistencia más severas." },
+            { q: "12. ¿Qué sanción se aplica por el 'Uso de castigos corporales y vejaciones'?", options: ["a) 1 a 10 puntos.", "b) 1 a 20 puntos de demérito.", "c) Descenso de dos categorías.", "d) Multa del 20% del salario."], correct: 1, retro: "Refleja la gravedad de atentar contra la integridad del estudiante." },
+            { q: "13. ¿Qué porcentaje de bonificación corresponde a la 3° categoría?", options: ["a) 45%.", "b) 60% sobre el haber básico.", "c) 75%.", "d) 100%."], correct: 1, retro: "La escala asigna un 60% de bono al llegar a la tercera categoría." },
+            { q: "14. ¿Cuándo perciben los maestros normalistas su primera bonificación?", options: ["a) La 5° categoría (30%) desde su iniciación y ascienden cada 5 años.", "b) Inician sin bonificación hasta los 5 años.", "c) 4° categoría desde el inicio.", "d) Deben cumplir 10 años."], correct: 0, retro: "Se premia la formación normalista otorgando el bono desde el ingreso." },
+            { q: "15. ¿Cuándo queda inhabilitado un maestro interino según la norma?", options: ["a) Tras 3 años sin inscribirse.", "b) Si tras 6 años de servicio no rindió la prueba de idoneidad por negligencia.", "c) Si reprueba tres veces el examen de ascenso.", "d) Si cambia de distrito sin permiso."], correct: 1, retro: "La permanencia está condicionada a la superación profesional." },
+            { q: "16. Según el artículo 73, ¿bajo qué condiciones únicas puede ser destituido un maestro?", options: ["a) Reordenamiento de ítems.", "b) Actos inmorales o delictuosos, previa sentencia en proceso con defensa.", "c) No aprobar dos exámenes de ascenso.", "d) Voluntad del Ministerio con preaviso."], correct: 1, retro: "La estabilidad laboral solo es alterable mediante proceso legal." },
+
+            // II. REGLAMENTO DE FALTAS Y SANCIONES
+            { q: "17. Ante un hecho que constituye falta administrativa y delito, ¿quién tiene competencia?", options: ["a) Exclusiva de tribunales del Ministerio.", "b) Delitos van a justicia ordinaria; faltas administrativas al Reglamento.", "c) El Reglamento tiene prelación sobre el Código Penal.", "d) La autoridad decide si remite a la justicia."], correct: 1, retro: "Se separa la responsabilidad penal de la administrativa-disciplinaria." },
+            { q: "18. ¿Cuál es la regla general sobre la suspensión del cargo durante un proceso?", options: ["a) Nunca se puede suspender.", "b) Suspensión inmediata por seguridad.", "c) Solo por reincidencia en faltas graves.", "d) No habrá suspensión mientras no se pruebe culpabilidad, excepto reincidencia en graves."], correct: 3, retro: "Protege la estabilidad laboral mientras dure la investigación." },
+            { q: "19. Según el Artículo 9 inciso c), ¿qué conducta documental constituye falta leve?", options: ["a) Pérdida definitiva de registros.", "b) Desorden o negligencia en presentación oportuna de registros y planes.", "c) Negativa a entregar informes fuera de horario.", "d) Entrega de planes a terceros."], correct: 1, retro: "Se sanciona la falta de cuidado administrativo en la gestión pedagógica." },
+            { q: "20. ¿Cómo se distingue un abandono como falta leve de uno como falta grave?", options: ["a) Inasistencia a actos (leve) vs consejo (grave).", "b) Abandono simple es leve; es grave si llega a 5 días (urbano) o 7 (alejado).", "c) Más de 24 horas es muy grave.", "d) Es grave solo si se lleva material oficial."], correct: 1, retro: "El factor tiempo y ubicación determina el salto de gravedad." },
+            { q: "21. ¿En qué categoría se clasifica el empleo de castigos corporales o psicológicos?", options: ["a) Falta leve.", "b) Falta grave, por atentar contra la dignidad.", "c) Falta muy grave.", "d) Grave si es físico, leve si es psicológico."], correct: 1, retro: "La integridad del alumno es un bien protegido con rigor." },
+            { q: "22. ¿Cuál es el efecto jurídico de la reincidencia voluntaria en faltas graves?", options: ["a) Duplicación de suspensión.", "b) Constituye falta muy grave (retiro o destitución).", "c) Traslado inmediato.", "d) Demérito de 50 puntos."], correct: 1, retro: "La reincidencia eleva la falta a la categoría máxima de sanción." },
+            { q: "23. Según el Artículo 11 inciso l), ¿qué conducta documental es falta muy grave?", options: ["a) Entrega de documentos no públicos.", "b) Uso indebido de sellos.", "c) Falsificación de datos o alteración de certificados mediante raspado/borrado.", "d) Demora en entrega de libretas."], correct: 2, retro: "La alteración de documentos oficiales atenta contra la fe pública." },
+            { q: "24. ¿Qué acción relativa a sustancias se considera falta muy grave?", options: ["a) Organizar fiestas con alcohol.", "b) Estado de ebriedad o invitación al uso de sustancias peligrosas.", "c) Autorizar venta de tabaco.", "d) Consumo fuera de jornada con uniforme."], correct: 1, retro: "Presentarse ebrio o promover drogas es inaceptable en la docencia." },
+            { q: "25. ¿Bajo qué criterios debe el tribunal aplicar las sanciones?", options: ["a) Automáticamente por tabla.", "b) Concurrencia de circunstancias atenuantes o agravantes demostradas.", "c) Consultando al consejo de maestros.", "d) Basado solo en méritos."], correct: 1, retro: "El fallo debe ser ponderado según el contexto del infractor y del hecho." },
+            { q: "26. ¿Cuáles son las sanciones específicas para una falta grave?", options: ["a) Amonestación y descuento.", "b) Suspensión (15-60 días), postergación de ascenso o descenso de cargo.", "c) Retiro definitivo.", "d) Multa del 10% anual."], correct: 1, retro: "Afecta tanto la economía como la carrera profesional del docente." },
+            { q: "27. ¿Qué sucede con una sanción impuesta sin cumplir normas procesales?", options: ["a) Válida hasta apelación.", "b) Nula pero obligatoria.", "c) Se tendrá por inexistente.", "d) Rectificada por superior."], correct: 2, retro: "El debido proceso es condición indispensable para la validez." },
+            { q: "28. ¿Cuál es la sede y competencia del Tribunal Disciplinario Nacional?", options: ["a) Capital departamental.", "b) Ciudad de La Paz; conoce apelaciones contra fallos departamentales.", "c) Sede itinerante.", "d) Ciudad de Sucre."], correct: 1, retro: "Es la instancia de apelación nacional con sede en el gobierno." },
+            { q: "29. ¿Quiénes deben conformar los tribunales disciplinarios?", options: ["a) Abogados particulares.", "b) Maestros-abogados designados entre autoridades y sindicatos.", "c) Maestros más antiguos.", "d) Directores sin procesos."], correct: 1, retro: "Se busca idoneidad pedagógica y jurídica con corresponsabilidad sindical." },
+            { q: "30. ¿Qué condición de jerarquía deben tener los miembros?", options: ["a) Especialidad diferente.", "b) Ser de igual o superior jerarquía a la de los encausados.", "c) Presidente Director Departamental.", "d) Elegidos por voto secreto."], correct: 1, retro: "Garantiza un juicio por pares o superiores." },
+            { q: "31. ¿En qué casos proceden las excusas y recusaciones?", options: ["a) Enemistad sindical.", "b) Haber sido colega.", "c) Ideología contraria.", "d) Parentesco consanguíneo (4to grado) o vínculo espiritual."], correct: 3, retro: "Se restringen las causales para evitar dilaciones indebidas." },
+            { q: "32. ¿Quién está facultado para sancionar las faltas leves?", options: ["a) Tribunal Departamental.", "b) La autoridad inmediata superior.", "c) El Ministerio.", "d) La Junta Escolar."], correct: 1, retro: "Es una competencia administrativa directa del superior jerárquico." },
+            { q: "33. ¿Cuál es el procedimiento para presentar una denuncia verbal?", options: ["a) Grabación de audio.", "b) El funcionario sentará acta, identificando al denunciante con testigo.", "c) Ratificación ante notario.", "d) No se aceptan verbales."], correct: 1, retro: "La formalización en acta garantiza la seriedad del inicio del proceso." },
+            { q: "34. ¿Qué plazos existen para remitir la denuncia y citar?", options: ["a) Remisión en 48 horas y citación en 24 horas.", "b) Remisión inmediata.", "c) Remisión en 72 horas.", "d) Remisión en 5 días."], correct: 0, retro: "La celeridad es un principio procesal administrativo." },
+            { q: "35. ¿Cuál es el plazo del periodo probatorio?", options: ["a) 20 días (prorrogable); incluye instructiva, testimonios y periciales.", "b) 10 días fijos.", "c) 30 días calendario.", "d) 15 días hábiles."], correct: 0, retro: "Define el tiempo y medios para demostrar la verdad de los hechos." },
+            { q: "36. ¿Qué plazos tiene el tribunal para el fallo y para apelar?", options: ["a) Fallo en 10 días; apelación siempre.", "b) Fallo en 3 días.", "c) Fallo en 5 días; apelación dentro de 3 días tras notificación.", "d) Fallo en 15 días."], correct: 2, retro: "Establece términos breves para resolver la situación." },
+            { q: "37. ¿Cómo debe presentarse el recurso de apelación ante el Tribunal Nacional?", options: ["a) Verbalmente.", "b) Memorial a la Ministra.", "c) En 48 horas.", "d) En tres días, con agravios, ante el mismo tribunal que sentenció."], correct: 3, retro: "El recurso se interpone ante el 'juez a quo' para su elevación." },
+            { q: "38. ¿Qué plazo tiene el Tribunal Nacional para resolver?", options: ["a) 30 días.", "b) Confirmar/revocar en 15 días; Resolución Ministerial final.", "c) 5 días hábiles.", "d) 20 días."], correct: 1, retro: "La Resolución Ministerial cierra la vía administrativa." },
+            { q: "39. ¿Quién ejecuta el fallo firme y en qué plazo?", options: ["a) Tribunal Departamental.", "b) Dirección de unidad.", "c) Autoridades administrativas dentro de tres días de recibir la R.M.", "d) Ministerio de Hacienda."], correct: 2, retro: "Corresponde a la administración activa dar cumplimiento." },
+            { q: "40. ¿Dónde se guardan los expedientes disciplinarios?", options: ["a) En la escuela.", "b) Destruidos tras 5 años.", "c) Dirección Distrital.", "d) Archivo del Ministerio; copia legalizada en expediente personal."], correct: 3, retro: "Garantiza el registro histórico centralizado de la conducta." },
+            { q: "41. Según el Artículo 4, ¿quiénes pueden juzgar a un maestro?", options: ["a) Comisiones especiales.", "b) Tribunales extraordinarios.", "c) Nadie puede ser juzgado por comisiones especiales o tribunales extraordinarios.", "d) El Consejo Educativo."], correct: 2, retro: "Garantía de juez natural y rechazo a tribunales de excepción." },
+
+            // III. PROTOCOLO
+            { q: "42. ¿Cuál es la definición exacta de 'protocolo'?", options: ["a) Sugerencias pedagógicas.", "b) Instrumento que define pasos basados en normas (qué, cómo, dónde, por qué).", "c) Manual de sanciones penales.", "d) Guía económica."], correct: 1, retro: "Es una herramienta técnica de estandarización de respuestas institucionales." },
+            { q: "43. ¿Cuál es el propósito final del protocolo?", options: ["a) Salvaguardar integridad de estudiantes con respuestas oportunas.", "b) Facilitar expulsiones.", "c) Centralizar estadística.", "d) Sustituir a la Policía."], correct: 0, retro: "El fin supremo es la protección del menor y su atención eficaz." },
+            { q: "44. ¿Qué opción agrupa principios del protocolo?", options: ["a) Autonomía y uniforme.", "b) Interés superior del niño, cultura de paz y corresponsabilidad.", "c) Sanción punitiva.", "d) Disciplina rígida."], correct: 1, retro: "Los principios orientan el enfoque preventivo y protector." },
+            { q: "45. Según el Art. 147 Ley 548, ¿qué constituye violencia?", options: ["a) Marcas físicas visibles.", "b) Falta de respeto.", "c) Contenidos no autorizados.", "d) Acción/omisión que ocasione daño en salud física, mental o sexual."], correct: 3, retro: "Define la violencia de forma integral abarcando daño multidimensional." },
+            { q: "46. ¿Cómo se manifiesta la violencia psicológica?", options: ["a) Agresiones verbales o manipulación para desvalorizar autoestima.", "b) Celdas de castigo.", "c) Conflicto de opiniones.", "d) Descuido en alimentación."], correct: 0, retro: "Se enfoca en el daño invisible pero profundo a la psiquis." },
+            { q: "47. ¿Qué actos son maltrato emocional?", options: ["a) Tratos humillantes, rumores y agresiones por prejuicios.", "b) Tareas extraordinarias.", "c) Uso de uniformes.", "d) Notas reprobadas."], correct: 0, retro: "Acciones que vulneran la dignidad y la imagen social del menor." },
+            { q: "48. ¿Cómo se vincula la violencia física con la tipicidad delictiva?", options: ["a) Falta leve interna.", "b) Acción intencional con daño; Art. 270 C.P. y siguientes.", "c) Conciliación distrital.", "d) Medida disciplinaria permitida."], correct: 1, retro: "Remite la violencia física al ámbito de la responsabilidad criminal." },
+            { q: "49. ¿En qué consiste la violencia por omisión?", options: ["a) Exceso de tareas.", "b) Falta de pago.", "c) Omisión o descuido de adultos en obligaciones de atención.", "d) Inasistencia escolar."], correct: 2, retro: "Se castiga la inacción de quienes deben proteger al menor." },
+            { q: "50. ¿Cuál es un ejemplo de violencia por omisión?", options: ["a) Recreos sin vigilancia o falta de seguimiento a NEE.", "b) Limpieza de pupitres.", "c) Excursiones autorizadas.", "d) Prohibir celulares."], correct: 0, retro: "Situaciones de abandono de custodia dentro del recinto escolar." }
+        ];
+        shuffleOptions(quizData);
+
+        const container = document.getElementById('quiz-container');
+
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `<div class="question-text">${item.q}</div>`;
+            
+            const list = document.createElement('ul');
+            list.className = 'options';
+            
+            item.options.forEach((opt, optIdx) => {
+                const li = document.createElement('li');
+                li.innerText = opt;
+                li.onclick = () => {
+                    const allOptions = list.querySelectorAll('li');
+                    allOptions.forEach(l => l.style.pointerEvents = 'none');
+                    
+                    const feedback = document.getElementById(`feed-${index}`);
+                    feedback.style.display = 'block';
+                    
+                    if (optIdx === item.correct) {
+                        feedback.innerText = "¡Correcto! " + item.retro;
+                        feedback.className = 'feedback correct';
+                        li.classList.add('selected-correct');
+                    } else {
+                        feedback.innerText = "¡Incorrrecto!";
+                        feedback.className = 'feedback incorrect';
+                        li.classList.add('selected-incorrect');
+                    }
+                };
+                list.appendChild(li);
+            });
+            
+            card.appendChild(list);
+            const feedDiv = document.createElement('div');
+            feedDiv.id = `feed-${index}`;
+            feedDiv.className = 'feedback';
+            card.appendChild(feedDiv);
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Ascenso - Estilos de Aprendizaje</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Simulador: Estilos de Aprendizaje y Métodos de Enseñanza</h1>
+        <p>Material de estudio basado en el Banco de Preguntas del Magisterio</p>
+    </header>
+
+    <main id="quiz-container"></main>
+
+    <script src="quiz-behavior.js"></script>
+    <script>
+        const quizData = [
+            { q: "1. ¿Qué elementos se consideran críticos para que el proceso de aprendizaje sea 'efectivo' dentro del aula?", options: ["a) Motivación intrínseca y tecnología.", "b) Equilibrio entre conductismo y constructivismo.", "c) Necesidades del alumno, su preparación, la situación específica y calidad de interacción.", "d) Retroalimentación constante y práctica repetitiva."], correct: 2, retro: "La efectividad depende de las necesidades del alumno, su preparación, la situación y la calidad de interacción [1, 2]." },
+            { q: "2. ¿Cuál de los siguientes grupos corresponde a las condiciones para el aprendizaje identificadas en el texto?", options: ["a) Motivación, seguridad psicológica, experimentación, retroalimentación, práctica, pertenencia e integración.", "b) Infraestructura, recursos multimedia, conectividad y sueldos.", "c) Disciplina rígida, evaluación sumativa y textos guía.", "d) Memorización, observación pasiva y enseñanza asincrónica."], correct: 0, retro: "Las condiciones propicias incluyen motivación, seguridad, experimentación, retroalimentación, práctica, pertenencia e integración [2, 3]." },
+            { q: "3. ¿Cómo se distingue técnicamente el aprendizaje 'formal' del 'no formal'?", options: ["a) El formal ocurre solo en universidades.", "b) El formal se rige por currículo oficial; el no formal en entornos organizados fuera del sistema reglado.", "c) El formal depende de e-learning; el no formal de enculturación.", "d) No existe distinción técnica."], correct: 1, retro: "El formal se rige por currículo oficial y certificado; el no formal es organizado pero externo al sistema reglado [4]." },
+            { q: "4. ¿Qué implica técnicamente el término 'Imprinting'?", options: ["a) Imprimir imágenes visuales en la memoria.", "b) Aprendizaje rápido e independiente de consecuencias en una fase crítica.", "c) Presión social sobre el individuo.", "d) Codificación de datos en e-learning."], correct: 1, retro: "Es un aprendizaje rápido e independiente de las consecuencias que ocurre en una fase crítica [5]." },
+            { q: "5. ¿Cuál es el orden ascendente correcto de la jerarquía de pensamiento?", options: ["a) Conocimiento, Comprensión, Aplicación, Análisis, Síntesis y Evaluación.", "b) Evaluación, Síntesis, Análisis, Aplicación, Comprensión y Conocimiento.", "c) Conocimiento, Aplicación, Análisis, Comprensión, Evaluación y Síntesis.", "d) Comprensión, Conocimiento, Análisis, Aplicación, Evaluación y Síntesis."], correct: 0, retro: "La pirámide va del conocimiento (simple) a la evaluación (complejo) [6]." },
+            { q: "6. Según Keefe (1988), ¿qué elementos sirven como indicadores de cómo los alumnos perciben el ambiente?", options: ["a) Libros leídos y promedio de notas.", "b) Entusiasmo intelectual y relaciones democráticas.", "c) Rasgos cognitivos, afectivos y fisiológicos relativamente estables.", "d) Preferencia por lección magistral."], correct: 2, retro: "Se definen por rasgos cognitivos, afectivos y fisiológicos estables de respuesta [7]." },
+            { q: "7. ¿Qué combinación de capacidades define al estilo 'Convergente' en el modelo de Kolb?", options: ["a) Experiencia Concreta y Observación Reflexiva.", "b) Conceptualización Abstracta y Experimentación Activa.", "c) Experiencia Concreta y Experimentación Activa.", "d) Conceptualización Abstracta y Observación Reflexiva."], correct: 1, retro: "Se define por la Conceptualización Abstracta (CA) y la Experimentación Activa (EA) [8]." },
+            { q: "8. Los alumnos con un estilo predominantemente 'Divergente' destacan en:", options: ["a) Aplicación práctica e ideas específicas.", "b) Creación de modelos teóricos complejos.", "c) Capacidad imaginativa, interés por la gente y ver perspectivas diferentes.", "d) Realización de experimentos nuevos."], correct: 2, retro: "Destacan por su capacidad imaginativa, interés social y visión multifocal de situaciones [9]." },
+            { q: "9. ¿Cómo actúa el alumno 'Acomodador' ante una teoría que no encaja con los hechos?", options: ["a) Descarta los hechos.", "b) Analiza de forma reflexiva y lenta.", "c) Abandona la tarea por inseguridad.", "d) Suele descartar la teoría y se guía más por los hechos."], correct: 3, retro: "Prioriza los hechos sobre la teoría y se adapta fácilmente a circunstancias inmediatas [10]." },
+            { q: "10. ¿Cuáles son las fases del ciclo de aprendizaje en su orden lógico?", options: ["a) Teorizar, Experimentar, Actuar y Reflexionar.", "b) Planificar, Actuar, Evaluar y Sistematizar.", "c) Escuchar, Memorizar, Repetir y Aplicar.", "d) Investigar, Analizar, Sintetizar y Exponer."], correct: 0, retro: "El orden lógico es: Teorizar, Experimentar, Actuar y Reflexionar [10]." },
+            { q: "11. ¿Cuál representa correctamente una dicotomía de los estudiantes?", options: ["a) Visuales o verbales; secuenciales o globales.", "b) Presenciales o virtuales; teóricos o prácticos.", "c) Audaces o cautos; rápidos o lentos.", "d) Individuales o grupales; dependientes o independientes."], correct: 0, retro: "Se categorizan en visuales/verbales y secuenciales/globales [11]." },
+            { q: "12. ¿Cuáles son los cuatro estilos propuestos por Honey y Mumford?", options: ["a) Pragmático, Reflexivo, Teórico y Activo.", "b) Analítico, Crítico, Creativo y Resolutivo.", "c) Memorístico, Significativo, Informal y Formal.", "d) Lógico, Lingüístico, Espacial y Kinestésico."], correct: 0, retro: "Los estilos son: Pragmático, Reflexivo, Teórico y Activo [12]." },
+            { q: "13. ¿Cuál es el papel de los 'Grupos de Expertos' en el Método Puzle?", options: ["a) Evaluar rendimiento grupal.", "b) Preparar materiales para el docente.", "c) Compartir ideas con iguales para luego enseñar a su grupo original.", "d) Designar un líder y roles específicos."], correct: 2, retro: "Su fin es compartir ideas para luego enseñar a sus compañeros originales [13]." },
+            { q: "14. ¿Qué define al 'Aprendizaje Organizativo Tecnológico-Científico'?", options: ["a) Hacer mecánico y eficiencia administrativa.", "b) Explicación de la realidad para transformarla: saber por qué se hace.", "c) Habilidades básicas insuficientes.", "d) Uso intensivo de software únicamente."], correct: 1, retro: "Busca la explicación de la realidad para transformarla, sabiendo el porqué de la acción [14]." },
+            { q: "15. ¿Qué caracteriza a los centros educativos 'Dinámicos'?", options: ["a) Movimiento geográfico constante.", "b) Mantienen prácticas tradicionales sin cambios.", "c) Asumen singularidad, promueven desarrollo profesional y buscan calidad.", "d) Burocracia y pérdida de rumbo pedagógico."], correct: 2, retro: "Asumen la singularidad, promueven el desarrollo docente y buscan la calidad [15]." },
+            { q: "16. ¿Qué significa proceder 'de lo concreto a lo abstracto'?", options: ["a) Empezar con teorías complejas.", "b) Iniciar con objetos o experiencias sensibles para formar conceptos.", "c) Usar solo materiales de desecho.", "d) Enseñar primero la escritura."], correct: 1, retro: "Significa iniciar con experiencias sensibles para llegar a generalizaciones [16]." },
+            { q: "17. ¿Cómo se define a un 'Maestro Completo' en la matriz de interacción?", options: ["a) Entusiasmo intelectual bajo y relación fría.", "b) Vago y aburrido pero cálido.", "c) Entusiasmo intelectual alto y relación interpersonal alta.", "d) Maestro conferencista prioritario."], correct: 2, retro: "Es aquel con alto entusiasmo (claro/emocionante) y alta relación (cálido/abierto) [17]." },
+            { q: "18. ¿Cuál es la distinción que hace la fuente respecto a la motivación?", options: ["a) Síncrona y asíncrona.", "b) Intrínseca (interna) o extrínseca (externa).", "c) Rasgo fisiológico inalterable.", "d) Es innecesaria con jerarquía estricta."], correct: 1, retro: "Se clasifica en intrínseca (interna) o extrínseca (estímulos externos) [18]." },
+            { q: "19. Según el modelo de Marcelo, ¿cuál es un pilar para el crecimiento docente?", options: ["a) Reflexión e investigación desde la propia práctica.", "b) Asistencia a seminarios internacionales.", "c) Cumplimiento de horas y registros.", "d) Competencia individualista por puntajes."], correct: 0, retro: "El pilar es el desarrollo basado en la reflexión e investigación de la práctica [19]." },
+            { q: "20. ¿Qué dimensiones caracterizan al 'Maestro Facilitador'?", options: ["a) Entusiasmo bajo y relación moderada.", "b) Entusiasmo intelectual moderado y relación interpersonal alta.", "c) Entusiasmo intelectual alto y relación baja.", "d) Entusiasmo bajo y relación baja."], correct: 1, retro: "Se caracteriza por entusiasmo intelectual moderado y relación interpersonal alta [20]." },
+            { q: "21. El 'Aprendizaje Organizativo Técnico-Práctico' se diferencia del científico en que:", options: ["a) Es insuficiente para enfrentar planteamientos creativos.", "b) Es superior al ámbito del saber.", "c) Se basa en diagnóstico multimedia.", "d) Es propio de institutos técnicos fiscales."], correct: 0, retro: "Al basarse solo en habilidades, es insuficiente para la creatividad [20, 21]." },
+            { q: "22. ¿Qué ocurre en la fase de 'Retorno al grupo original' del Puzle?", options: ["a) Estudio individual en casa.", "b) Los expertos regresan para presentar la información; todos enseñan.", "c) Examen escrito individual.", "d) Lección magistral correctiva."], correct: 1, retro: "Los expertos regresan a sus grupos originales para que todos enseñen y aprendan [22]." },
+            { q: "23. El principio 'de lo conocido a lo desconocido' sugiere:", options: ["a) Ocultar información para dar misterio.", "b) Partir de saberes previos para anclar nuevos conocimientos.", "c) Enseñar lo que el docente desconoce.", "d) Abstracción lógica pura sin imágenes."], correct: 1, retro: "Sugiere partir de las experiencias previas del alumno para anclar el saber nuevo [23]." },
+            { q: "24. El aprendizaje 'Episódico' se relaciona con:", options: ["a) Series de televisión educativas.", "b) Eventos específicos vinculados a tiempo y lugar determinados.", "c) Repetición mecánica histórica.", "d) Software dividido por capítulos."], correct: 1, retro: "Se vincula a experiencias específicas situadas en un tiempo y lugar [24]." },
+            { q: "25. ¿Cuál es la posición del aprendizaje 'Mejorado por la tecnología'?", options: ["a) Rama de la teoría conductista.", "b) Vinculado a la experimentación y el e-learning.", "c) Único método efectivo para estilos globales.", "d) Condición para integración y pertenencia."], correct: 1, retro: "Se presenta vinculado a la experimentación y al e-learning [25]." },
+            { q: "26. ¿Por qué es fundamental la 'Seguridad Psicológica'?", options: ["a) Garantiza guardias y cámaras.", "b) Permite arriesgarse a errar sin miedo al castigo o burla.", "c) Asegura seguro de vida docente.", "d) Previene imprinting de redes sociales."], correct: 1, retro: "Permite al alumno arriesgarse y experimentar sin temor a represalias [26]." },
+            { q: "27. Un alumno con un estilo 'Sensorial' preferirá:", options: ["a) Hechos, datos y procedimientos algorítmicos.", "b) Teorías abstractas y posibilidades creativas.", "c) Visión y oído multimedia exclusivo.", "d) Trabajo asincrónico sin docente."], correct: 0, retro: "Prefiere hechos, datos concretos y procedimientos establecidos [27]." },
+            { q: "28. 'Asumir aprender de sus errores' es fundamental para:", options: ["a) El aprendizaje organizativo de calidad.", "b) Castigar docentes incumplidores.", "c) Identificar centros 'Paseantes'.", "d) Justificar falta de planificación."], correct: 0, retro: "Es base de la calidad, viendo el error como oportunidad de mejora [28]." },
+            { q: "29. ¿Qué cuadrante ocupa el estilo 'Asimilador'?", options: ["a) Superior derecho.", "b) Inferior derecho; Conceptualización Abstracta y Observación Reflexiva.", "c) Inferior izquierdo.", "d) Superior izquierdo."], correct: 1, retro: "Ocupa el cuadrante inferior derecho: Conceptualización Abstracta (CA) y Observación Reflexiva (OR) [29]." },
+            { q: "30. El principio 'Desafiar pero exitosos' implica tareas que:", options: ["a) Necesiten profesor particular.", "b) Sean fáciles sin esfuerzo.", "c) Representen un reto cognitivo alcanzable que motive.", "d) Estén fuera del currículo base."], correct: 2, retro: "Deben ser retos alcanzables que generen éxito y motivación [30]." },
+            { q: "31. El aprendizaje 'Significativo' se caracteriza por:", options: ["a) Retención sin conexión previa.", "b) Vinculación de nueva información con estructura cognitiva previa.", "c) Técnicas de imprinting histórico.", "d) Proceso pasivo por enculturación."], correct: 1, retro: "Es la vinculación de información nueva con lo que ya se sabe, dándole sentido [31]." },
+            { q: "32. ¿Cómo se describe el comportamiento del 'Maestro Inadecuado'?", options: ["a) Cálido borroso.", "b) Vago y aburrido en entusiasmo; frío y distante en relación.", "c) Conferencista con altas expectativas.", "d) Radical en teorías."], correct: 1, retro: "Se describe como vago/aburrido en entusiasmo y frío/distante en trato [32]." },
+            { q: "33. El aprendizaje 'Tangencial' ocurre cuando:", options: ["a) Se estudia un tema paralelo profundo.", "b) Se aprende de forma colateral mientras se hace otra actividad.", "c) Se usan tangentes matemáticas.", "d) Hay distracción constante."], correct: 1, retro: "Es el aprendizaje colateral que sucede durante otra actividad principal [33]." },
+            { q: "34. El modelo de Imbernon enfatiza la formación individual y:", options: ["a) Competencia por cargos.", "b) Entrenamiento institucional junto con investigación.", "c) Abandono de evaluación.", "d) Centralización externa."], correct: 1, retro: "Une la formación institucional con la investigación e indagación [34]." },
+            { q: "35. Un estudiante con un estilo 'Reflexivo' tiende a:", options: ["a) Lanzarse inmediatamente sin pensar.", "b) Meditar, analizar desde varios ángulos y esperar antes de actuar.", "c) Preferir multimedia sobre interacción.", "d) Centrarse en rasgos fisiológicos."], correct: 1, retro: "Tiende a meditar y analizar la información antes de tomar acción [35]." },
+            { q: "36. ¿Qué sugiere el término 'Paseantes' en la tipología de centros?", options: ["a) Muchas excursiones escolares.", "b) Transitar por la educación sin compromiso con la mejora.", "c) Ubicación en zonas de alto tráfico.", "d) Promoción del desarrollo autónomo."], correct: 1, retro: "Define centros que transitan por la educación sin reflexión ni mejora [36]." },
+            { q: "37. El principio 'de lo simple a lo complejo' recomienda:", options: ["a) Iniciar con elementos básicos para luego ir a estructuras intrincadas.", "b) Enseñar excepciones primero.", "c) Lenguaje técnico elevado inicial.", "d) Evaluar lo difícil al principio."], correct: 0, retro: "Recomienda iniciar con bases para abordar luego sistemas intrincados [37]." },
+            { q: "38. ¿Qué permite la 'Experimentación' según el diagrama?", options: ["a) Verificar teorías mediante la práctica y contacto directo.", "b) Reducir tiempo de lección.", "c) Reemplazar retroalimentación.", "d) Participación de padres."], correct: 0, retro: "Permite verificar las teorías a través de la práctica directa [38]." },
+            { q: "39. Los estudiantes 'Globales' se caracterizan por:", options: ["a) Pequeños pasos lógicos.", "b) Aprender a grandes saltos, viendo la totalidad antes que detalles.", "c) Preferir aprendizaje informal.", "d) Usar solo mapas mundiales."], correct: 1, retro: "Aprenden visualizando primero el problema en su totalidad [39]." },
+            { q: "40. El principio 'de lo real a lo representativo' sugiere:", options: ["a) Usar modelos antes que el objeto real.", "b) Interactuar con el objeto real antes de pasar a imágenes.", "c) Prohibir imágenes.", "d) Priorizar cuentos fantásticos."], correct: 1, retro: "Sostiene que el contacto real debe preceder a los símbolos [40]." },
+            { q: "41. ¿Cuál es el perfil de equilibrio del 'Maestro Competente'?", options: ["a) Entusiasmo bajo y relación alta.", "b) Entusiasmo intelectual y relación interpersonal moderados.", "c) Entusiasmo alto y relación baja.", "d) Dedicación exclusiva a evaluación."], correct: 1, retro: "Es el equilibrio entre entusiasmo intelectual y relación interpersonal [41]." },
+            { q: "42. El aprendizaje 'Mejorado por la tecnología' se define como:", options: ["a) Uso de recursos digitales para potenciar la asimilación.", "b) Desarmar aparatos.", "c) Reemplazo total de interacción.", "d) Refuerzo de puntos virtuales."], correct: 0, retro: "Utiliza recursos digitales para mejorar el proceso de aprendizaje [42]." },
+            { q: "43. Un estudiante 'Convergente' se siente cómodo con:", options: ["a) Lluvias de ideas creativas.", "b) Síntesis de muchas teorías.", "c) Tareas con una solución correcta y aplicación técnica.", "d) Debates filosóficos."], correct: 2, retro: "Busca tareas con soluciones técnicas únicas y aplicaciones precisas [43]." },
+            { q: "44. El aprendizaje 'Observacional' se basa en:", options: ["a) Observar estrellas.", "b) Adquisición de conductas observando a otros.", "c) Mirar fijamente el libro.", "d) Uso de microscopios."], correct: 1, retro: "Es la adquisición de conocimientos por imitación de modelos [44]." },
+            { q: "45. El principio de 'Jerarquía de contenido' sostiene:", options: ["a) El docente es el jefe supremo.", "b) Contenidos organizados de lo fundamental a lo accesorio.", "c) Ciencias exactas superiores.", "d) Memorizar funcionarios."], correct: 1, retro: "Dicta que los contenidos deben ir de lo básico a lo complejo [45]." },
+            { q: "46. 'Diagnosticar sistemáticamente líneas de mejora' permite:", options: ["a) Identificar debilidades y planificar acciones de calidad.", "b) Diagnósticos médicos.", "c) Sancionar docentes.", "d) Listas de compras obligatorias."], correct: 0, retro: "Permite a la escuela identificar debilidades para elevar su calidad [46]." },
+            { q: "47. La incorporación de 'Inteligencias Múltiples' sugiere que:", options: ["a) Todos tienen el mismo tipo de inteligencia.", "b) Existen diferentes formas de procesar información.", "c) CI superior a 130 obligatorio.", "d) Rasgo auditivo/visual fijo."], correct: 1, retro: "Reconoce que hay variadas formas de procesar la información [47]." },
+            { q: "48. El principio 'de lo empírico a lo racional' es fundamental porque:", options: ["a) La razón pura es superior.", "b) Parte de experiencia y datos sensibles para construir lógica.", "c) Trato empírico y evaluación sumativa.", "d) Acción irracional inicial."], correct: 1, retro: "Propone usar datos sensibles para construir pensamiento lógico [48]." },
+            { q: "49. ¿Qué papel juega la 'Retroalimentación'?", options: ["a) Innecesaria tras enculturación.", "b) Informa sobre progreso, aciertos y errores para ajustar.", "c) Solo entrega de nota final.", "d) Desayuno escolar."], correct: 1, retro: "Informa sobre el progreso para permitir el ajuste necesario [49]." },
+            { q: "50. El objetivo de la autoevaluación de preferencias es:", options: ["a) Separar grupos de élite.", "b) Identificar estilo para individualizar enseñanza.", "c) Requisito estadístico.", "d) Elegir carrera universitaria."], correct: 1, retro: "Sirve para que el docente pueda adaptar su estilo al del alumno [50]." }
+        ];
+        shuffleOptions(quizData);
+
+        const container = document.getElementById('quiz-container');
+
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `<div class="question-text">${item.q}</div>`;
+            
+            const list = document.createElement('ul');
+            list.className = 'options';
+            
+            item.options.forEach((opt, optIndex) => {
+                const li = document.createElement('li');
+                li.innerText = opt;
+                li.onclick = () => {
+                    const allOptions = list.querySelectorAll('li');
+                    allOptions.forEach(l => l.style.pointerEvents = 'none');
+                    
+                    const feedback = document.getElementById(`feedback-${index}`);
+                    feedback.style.display = 'block';
+                    
+                    if (optIndex === item.correct) {
+                        feedback.innerText = "¡Correcto! " + item.retro;
+                        feedback.className = 'feedback correct';
+                        li.style.backgroundColor = '#d4edda';
+                        li.style.borderColor = '#28a745';
+                    } else {
+                        feedback.innerText = "¡Incorrrecto!";
+                        feedback.className = 'feedback incorrect';
+                        li.style.backgroundColor = '#f8d7da';
+                        li.style.borderColor = '#dc3545';
+                    }
+                };
+                list.appendChild(li);
+            });
+            
+            card.appendChild(list);
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = `feedback-${index}`;
+            feedbackDiv.className = 'feedback';
+            card.appendChild(feedbackDiv);
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>

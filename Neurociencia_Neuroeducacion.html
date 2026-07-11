@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador - Neurociencia y Neuroaprendizaje</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Simulador: Neurociencia y Neuroaprendizaje</h1>
+        <p>Material de estudio basado en la obra de Marilina Rotger</p>
+    </header>
+
+    <main id="quiz-container"></main>
+
+    <script src="quiz-behavior.js"></script>
+    <script>
+        const quizData = [
+            { q: "1. ¿Cuál es la función primordial del 'cerebro reptiliano' según el modelo triuno?", options: ["a) Procesamiento de lenguaje complejo.", "b) Regulación de funciones vitales y conductas automáticas (hábitos).", "c) Gestión de la empatía.", "d) Planificación de metas."], correct: 1, retro: "Es la estructura más primitiva que prioriza la supervivencia, la homeostasis y las rutinas." },
+            { q: "2. ¿Qué define técnicamente al 'retraso genómico'?", options: ["a) Desfase entre nuestro genoma y el mundo artificial moderno.", "b) Incapacidad neuronal de sinapsis sonora.", "c) Eliminación de redes durante el sueño.", "d) Falta de estimulación multisensorial."], correct: 0, retro: "Este desfase entre nuestro diseño evolutivo y el entorno actual causa las llamadas 'enfermedades de la civilización'." },
+            { q: "3. ¿Cómo se diferencia la neuroplasticidad positiva de la negativa?", options: ["a) La positiva aumenta el cortisol.", "b) La positiva es memorizar datos mecánicos.", "c) La positiva crea redes nuevas; la negativa desecha redes inactivas.", "d) Solo ocurre en la niñez."], correct: 2, retro: "El cerebro crea conexiones con el uso y las elimina (poda) por desuso para optimizar recursos." },
+            { q: "4. ¿Qué factores son indispensables para consolidar una red neuronal significativa?", options: ["a) Motivación, repetición con novedad, variedad sensorial y contexto emocional.", "b) Disciplina rígida y aislamiento.", "c) Evaluación sumativa y competencia extrema.", "d) Silencio absoluto y repetición mecánica."], correct: 0, retro: "La sinapsis requiere un entorno que active neurotransmisores positivos y conecte con la curiosidad." },
+            { q: "5. Según Paul Ekman, ¿cuál es la distribución de las seis emociones primarias?", options: ["a) Todas son positivas.", "b) Cuatro negativas, una positiva y una neutral (sorpresa).", "c) Tres motivadoras y tres bloqueadoras.", "d) Clasificadas por lóbulo cerebral."], correct: 1, retro: "Esta distribución biológica busca asegurar la supervivencia ante peligros." },
+            { q: "6. ¿Cuál es la diferencia técnica entre emoción y sentimiento?", options: ["a) La emoción es lógica.", "b) La emoción es opcional.", "c) La emoción es inevitable; el sentimiento es una interpretación racional.", "d) Son sinónimos cardíacos."], correct: 2, retro: "El sentimiento surge de interpretar la emoción usando los lóbulos prefrontales." },
+            { q: "7. ¿Qué roles cumplen la amígdala y el hipocampo en la memoria?", options: ["a) La amígdala borra y el hipocampo crea.", "b) El hipocampo reacciona al miedo.", "c) La amígdala determina qué guardar y el hipocampo envía a la corteza.", "d) Se encargan solo del olfato."], correct: 2, retro: "La amígdala da el peso emocional y el hipocampo gestiona el archivo a largo plazo." },
+            { q: "8. ¿Cuándo actúa la amígdala como bloqueadora de información?", options: ["a) Ante situaciones de placer.", "b) Ante amenazas o miedo, activando el cortisol.", "c) Por autoconocimiento profundo.", "d) Por actividades de neuroacción."], correct: 1, retro: "El estrés agudo provoca un 'secuestro amigdalar' que impide el pensamiento reflexivo." },
+            { q: "9. ¿Qué neurotransmisores componen el circuito DAS y en qué secuencia?", options: ["a) Cortisol, Acetilcolina y Adrenalina.", "b) Dopamina (motivación), Noradrenalina (acción) y Serotonina (satisfacción).", "c) Melatonina, Glutamato y Oxitocina.", "d) Orden inverso (S-D-A)."], correct: 1, retro: "Es el ciclo biológico del deseo, el esfuerzo y la recompensa final." },
+            { q: "10. ¿Cuál es el efecto principal de la dopamina en el cerebro del estudiante?", options: ["a) Provoca somnolencia.", "b) Genera placer y predispone al trabajo motivado.", "c) Inhibe la atención.", "d) Aumenta solo la respuesta física."], correct: 1, retro: "Es el neurotransmisor 'amigo del aprendizaje' por su papel en la recompensa." },
+            { q: "11. ¿Qué implica la plasticidad cerebral para la enseñanza en adultos?", options: ["a) No tiene efecto.", "b) Depende solo de la genética.", "c) El cerebro nunca pierde su plasticidad y siempre puede aprender.", "d) Solo con suplementos químicos."], correct: 2, retro: "El cerebro puede rejuvenecer y esculpirse a cualquier edad con estímulo adecuado." },
+            { q: "12. ¿Qué caracteriza a un estudiante con alta inteligencia intrapersonal?", options: ["a) Extroversión y liderazgo.", "b) Conciencia de sí mismo, sus emociones, metas y debilidades.", "c) Manejo de lenguaje oral.", "d) Visualización mental de objetos."], correct: 1, retro: "Se refiere a la capacidad de autoanálisis y gestión del mundo interior." },
+            { q: "13. ¿Cuál de estas es una función ejecutiva?", options: ["a) Regulación cardíaca.", "b) Archivo de traumas.", "c) Reacción de lucha/fuga.", "d) Planificar, organizar y supervisar errores."], correct: 3, retro: "Estas funciones residen en la neocorteza y permiten regular el comportamiento." },
+            { q: "14. Según Hebb, ¿qué fortalece técnicamente una conexión sináptica?", options: ["a) Activación de neuronas de forma simultánea y repetida.", "b) Descarga eléctrica mínima.", "c) Vaciar el cerebro previo.", "d) Activar melatonina."], correct: 0, retro: "Las neuronas que disparan juntas, se conectan con más fuerza." },
+            { q: "15. ¿Qué es la 'Depresión a Largo Plazo' (DPL) en neurobiología?", options: ["a) Tristeza clínica.", "b) Conexiones distantes.", "c) Debilitamiento de conexiones por desuso.", "d) Traslado al hipocampo."], correct: 2, retro: "Lo que no se usa, el cerebro lo elimina para ahorrar energía." },
+            { q: "16. Según Posner, ¿cómo se define la atención voluntaria?", options: ["a) Espontánea.", "b) Requiere gasto energético alto para fijarse en algo prescindiendo de otros.", "c) Filtro SARA veloz.", "d) Downtime reflexivo."], correct: 1, retro: "Es una atención consciente que consume mucha glucosa y oxígeno cerebral." },
+            { q: "17. ¿Dónde se ubica la memoria de trabajo y cuánto dura?", options: ["a) Sistema límbico; milisegundos.", "b) Lóbulos Prefrontales; pocos minutos.", "c) Cerebelo; años.", "d) Amígdala; habilidades motoras."], correct: 1, retro: "Mantiene la información 'en línea' para resolver una tarea inmediata." },
+            { q: "18. ¿Cómo se divide la memoria declarativa?", options: ["a) Auditiva y kinestésica.", "b) Episódica (vivencias) y semántica (conceptos).", "c) Inmediata y de trabajo.", "d) Positiva y negativa."], correct: 1, retro: "Es la memoria que podemos recuperar conscientemente y expresar con palabras." },
+            { q: "19. ¿Qué hormona secreta el estrés y cómo afecta?", options: ["a) Dopamina (abre paso).", "b) Serotonina (calma).", "c) Cortisol (bloquea el paso a la corteza).", "d) Noradrenalina (atención)."], correct: 2, retro: "El cortisol inunda el cerebro e impide procesar información compleja." },
+            { q: "20. ¿Cuál es el objetivo de una enseñanza exitosa respecto al SARA?", options: ["a) Impedir llegada al sistema límbico.", "b) Controlar el fluido útil para que alcance los lóbulos prefrontales.", "c) Activar solo el cerebro reptiliano.", "d) Inundar con millones de estímulos."], correct: 1, retro: "El docente debe captar la atención para que la información se vuelva conocimiento." },
+            { q: "21. Tiempo de 'Uptime' para secundaria:", options: ["a) 5-8 min.", "b) 15-18 min.", "c) 12-15 min.", "d) 80 min."], correct: 2, retro: "Después de este tiempo se requiere un intervalo cerebral." },
+            { q: "22. ¿Cuándo se logra un aprendizaje profundo?", options: ["a) Al asociar ideas, aplicar principios y vincular saberes previos.", "b) Reproducción pasiva.", "c) Clasificación mecánica.", "d) Memoria sensorial."], correct: 0, retro: "Ocurre cuando el estudiante construye y da sentido personal a la información." },
+            { q: "23. Cinco capacidades de la inteligencia emocional:", options: ["a) Memoria y lógica.", "b) Autoconciencia, autorregulación, motivación, empatía y hab. sociales.", "c) Supervivencia e imitación.", "d) Lectura y cálculo."], correct: 1, retro: "Goleman establece estas áreas como base de la gestión emocional." },
+            { q: "24. Una persona emocionalmente inteligente prefiere:", options: ["a) Reacciones de lucha.", "b) Respuestas pensadas en lugar de automáticas.", "c) Pensamiento rumiante.", "d) Secuestro amigdalar."], correct: 1, retro: "Busca el equilibrio y la asertividad en sus interacciones." },
+            { q: "25. Diferencia de emociones secundarias:", options: ["a) Son genéticas puras.", "b) Interviene cultura, memética y contexto.", "c) Maduración a los 18.", "d) Por poda de axones."], correct: 1, retro: "Se desprenden de las primarias según el entorno del sujeto." },
+            { q: "26. Origen del comportamiento habitual:", options: ["a) Químico aleatorio.", "b) Pensamientos y emociones son su cimiento.", "c) Cerebro reptiliano solo.", "d) Entorno artificial solo."], correct: 1, retro: "Nuestra forma de actuar se basa en cómo procesamos interna y afectivamente la realidad." },
+            { q: "27. Responsabilidad docente actual:", options: ["a) Cobro de multas.", "b) Abordar lo socio-afectivo integrándolo a lo cognitivo.", "c) Entrenar lucha y fuga.", "d) Eliminar artes."], correct: 1, retro: "Debe intervenir el afecto, la confianza y la autoestima en el aula." },
+            { q: "28. Dinámica 'Panel de la Emoción':", options: ["a) Premiar con dulces.", "b) Elegir emoticón y debatir el clima grupal.", "c) Separar alumnos negativos.", "d) Memorizar a Ekman."], correct: 1, retro: "Permite que los estudiantes pongan en palabras sus emociones." },
+            { q: "29. ¿Qué alivia el Botiquín Emocional?", options: ["a) Lesiones traumáticas.", "b) Síntomas somáticos (dolor panza/cabeza) de origen emocional.", "c) Oxigenación baja.", "d) Desuso neuronal."], correct: 1, retro: "Funciona como remedio para el dolor emocional no reconocido." },
+            { q: "30. Beneficio de los 'Recreos Cerebrales':", options: ["a) Mantener alerta de cortisol.", "b) Despertar dopamina, oxigenar y nivelar estados mediante movimiento.", "c) Descanso de melatonina.", "d) Sinapsis eléctrica."], correct: 1, retro: "Son pausas necesarias para mantener la atención sostenible." },
+            { q: "31. ¿Cómo reconocer emociones en el cuerpo?", options: ["a) Leer manuales.", "b) Sentir la sensación y marcarla en un dibujo del cuerpo.", "c) Fotografía mental.", "d) Ignorar palpitaciones."], correct: 1, retro: "Ayuda al autoconocimiento para responder en vez de reaccionar." },
+            { q: "32. Cartas que Emocionan fomenta:", options: ["a) Autorregulación.", "b) Empatía mediante intercambio anónimo.", "c) Autoconciencia auditiva.", "d) Abrazos de 5 seg."], correct: 1, retro: "Despierta la comprensión del estado emocional del compañero." },
+            { q: "33. Área estimulada por lenguaje positivo:", options: ["a) Centro del olfato.", "b) Tronco cerebral.", "c) Centros de motivación y actividad del lóbulo frontal.", "d) Memoria de trabajo."], correct: 2, retro: "Las palabras que usamos pueden cambiar físicamente la actividad cerebral." },
+            { q: "34. Repetición para memoria a largo plazo:", options: ["a) Idéntica 10 veces.", "b) Con novedad por lo menos siete veces.", "c) Nunca repetir.", "d) Tarea a familias."], correct: 1, retro: "Refuerza la red neuronal de formas variadas para consolidar el saber." },
+            { q: "35. Efecto de hidratación en el aula:", options: ["a) Mejora ánimo, agudiza memoria y concentración.", "b) Activa melatonina.", "c) Bloquea instintos.", "d) Elimina neurotransmisores."], correct: 0, retro: "La falta de agua incide negativamente en el rendimiento cognitivo." },
+            { q: "36. Siglas VAK:", options: ["a) Valoración.", "b) Visual, Auditivo y Kinestésico (estilos de aprendizaje).", "c) Veracidad.", "d) Vocación."], correct: 1, retro: "Sirven para adaptar la enseñanza a la vía preferente de cada alumno." },
+            { q: "37. Relación emoción-examen:", options: ["a) Más nervios, mejor memoria.", "b) Relación directa entre estrés/nervios y bajo rendimiento.", "c) Estrés abre amígdala.", "d) Sin relación."], correct: 1, retro: "La percepción de amenaza en la evaluación bloquea el rendimiento." },
+            { q: "38. Valor de 'A pregunta, B responde, Z corrige':", options: ["a) Competencia feroz.", "b) Síntesis participativa y lúdica del tema.", "c) Sanción pública.", "d) Retiro del docente."], correct: 1, retro: "Es una forma de evaluación asertiva y dinámica." },
+            { q: "39. Técnica de los 'Cinco Segundos':", options: ["a) El más rápido grita.", "b) Responder por sí/no en papel dando tiempo a todos.", "c) Examen de 80 preguntas.", "d) Silencio de castigo."], correct: 1, retro: "Garantiza que todos respondan al mismo tiempo respetando ritmos." },
+            { q: "40. Objetivo de ejercicios de 'Invertir atención':", options: ["a) Entrenar atención profunda durante razonamiento.", "b) Memorizar cifras.", "c) Olvidar el nombre.", "d) Aumentar cortisol."], correct: 0, retro: "Obliga al cerebro a trabajar el proceso atencional con mayor intensidad." },
+            { q: "41. Desafío del buen educador:", options: ["a) Excelencia lingüística única.", "b) Ayudar a descubrir el talento y potencial individual.", "c) Eliminar emociones.", "d) Éxito solo en pruebas."], correct: 1, retro: "Todos somos inteligentes para algo y el docente debe descubrirlo." },
+            { q: "42. Funciones del cerebro mamífero:", options: ["a) Planificar futuro.", "b) Regular sueño, hambre y vínculos sociales.", "c) Caminar y respirar.", "d) Resolver ecuaciones."], correct: 1, retro: "Asociado al sistema límbico y la necesidad de ser reconocido." },
+            { q: "43. Neuroplasticidad negativa:", options: ["a) Agresividad por mala dieta.", "b) Desarmar redes poco activas por optimización.", "c) Incapacidad genética.", "d) Bloqueo total amigdalar."], correct: 1, retro: "Es el proceso inverso a la PLP: lo que no se usa se elimina." },
+            { q: "44. ¿Qué sistema es el 'portero' de la información?", options: ["a) Hipotálamo.", "b) SARA (Reticular Ascendente).", "c) Corazón.", "d) Ganglios basales."], correct: 1, retro: "Determina la velocidad y contenido que pasa al cerebro superior." },
+            { q: "45. Diferencia Uptime vs Downtime:", options: ["a) Dormir vs Ejercicio.", "b) Percepción global alerta vs Procesamiento y reflexión interna.", "c) Inicial vs Mayor de 18.", "d) Sin diferencia."], correct: 1, retro: "Uptime es entrada de datos; Downtime es diálogo interno de procesamiento." },
+            { q: "46. Habilidades de personas emocionalmente inteligentes:", options: ["a) Control de impulsos, entusiasmo, perseverancia y empatía.", "b) Memoria de diccionarios.", "c) Ignorar sentimientos ajenos.", "d) Resistencia al sueño."], correct: 0, retro: "Potencian respuestas emocionales en vez de reacciones automáticas." },
+            { q: "47. ¿Qué necesita el cerebro racional?", options: ["a) Rituales constantes.", "b) Novedad, desafíos y aprender por la acción.", "c) Grasas trans.", "d) Órdenes directas."], correct: 1, retro: "Se nutre de estímulos internos y externos que inviten a pensar." },
+            { q: "48. Objetivo biológico de la 'poda neuronal':", options: ["a) Disminuir inteligencia.", "b) Disponibilidad para conexiones de uso frecuente.", "c) Impedir aprendizaje.", "d) Eliminar química."], correct: 1, retro: "Optimiza la eficiencia cerebral descartando lo irrelevante." },
+            { q: "49. Memoria sensorial o inmediata:", options: ["a) Permanente en hipocampo.", "b) Dura milisegundos, limitada a lo percibido.", "c) Sin repetición para examen.", "d) Cambios estructurales."], correct: 1, retro: "Es el almacenamiento inicial momentáneo de los sentidos." },
+            { q: "50. Combatir el pensamiento rumiante:", options: ["a) Escenarios catastróficos.", "b) Aceptación del problema y plan de solución real.", "c) Aumentar cortisol.", "d) Ignorar sensación."], correct: 1, retro: "Combate la ansiedad propia de imaginar más que la realidad." },
+            { q: "51. Comunicación neuronal confirmada por Loewi:", options: ["a) Chispas eléctricas solas.", "b) Liberación de sustancias químicas (neurotransmisores).", "c) Contacto físico de núcleos.", "d) Ondas sonoras."], correct: 1, retro: "Las señales se transmiten a través del espacio sináptico mediante química." },
+            { q: "52. Funciones de la noradrenalina:", options: ["a) Sueño profundo.", "b) Enfoque mental, atención y aumento de ritmo cardíaco.", "c) Sensaciones de tristeza.", "d) Inmovilidad física."], correct: 1, retro: "Neurotransmisor excitador que regula la excitación física y mental." },
+            { q: "53. Diferencia proceso cognitivo vs neurofisiológico:", options: ["a) Cognitivo crea patrones mentales; neurofisiológico crea redes neuronales.", "b) Nutrición vs Respiración.", "c) Sin diferencia.", "d) Reptiles vs Humanos."], correct: 0, retro: "Uno se refiere a la mente y el otro a la estructura física biológica." },
+            { q: "54. ¿Qué registra la memoria episódica además de datos?", options: ["a) Tablas de multiplicar.", "b) El estado mental y emocional del momento del suceso.", "c) Movimientos automáticos.", "d) Ubicación espacial."], correct: 1, retro: "Registra la vivencia personal inmersa en su contexto afectivo." },
+            { q: "55. Transición por repetición con novedad:", options: ["a) De episódica a sensorial.", "b) De memoria de trabajo a largo plazo.", "c) Solo traumas amigdalares.", "d) Apagado del neocortex."], correct: 1, retro: "Es el método para que el aprendizaje perdure en el tiempo." },
+            { q: "56. ¿Por qué enseñar habilidades sociales?", options: ["a) Memorizar fechas.", "b) Son armas para la vida e inserción social exitosa.", "c) Imitar reptiles.", "d) Eliminar inteligencia emocional."], correct: 1, retro: "Son fundamentales para enfrentar los desafíos de la sociedad actual." },
+            { q: "57. Curiosidad y salud mental:", options: ["a) Curiosidad peligrosa.", "b) Estar atentos y curiosos mantiene la salud mental.", "c) Inhibir curiosidad.", "d) Solo hasta los 5 años."], correct: 1, retro: "Mantiene el cerebro activo, dinámico y previene el deterioro." },
+            { q: "58. ¿Qué debe ocurrir para llegar a las redes cognitivas?", options: ["a) Sentir miedo.", "b) Pasar por las redes instintivas emocionales (reptil/mamífero).", "c) Apagar el SARA.", "d) Luz blanca fuerte."], correct: 1, retro: "Las emociones niveladas son la puerta de entrada a la razón." },
+            { q: "59. Dinámica 'Cambio de Roles':", options: ["a) Diseñar evaluación de pares, resolverla y corregirla.", "b) Intercambio de mochilas.", "c) Actuar como director.", "d) Gritar en 5 segundos."], correct: 0, retro: "Convierte al estudiante en protagonista de su proceso de evaluación." },
+            { q: "60. Beneficios de los abrazos:", options: ["a) Autoestima, reduce estrés y ayuda al sistema inmune.", "b) Incrementa cortisol.", "c) Competencia individual.", "d) Identificar nutrición."], correct: 0, retro: "Libera oxitocina y dopamina, balanceando el sistema nervioso." },
+            { q: "61. Actividad diaria para neuroplasticidad:", options: ["a) Aprender algo nuevo y ejercicio físico.", "b) Dormir 4 horas.", "c) Evitar naturaleza.", "d) Repetir TV."], correct: 0, retro: "Cambiar rutas y sumar alimentos nuevos genera redes frescas." },
+            { q: "62. Naturaleza de la inteligencia emocional:", options: ["a) Rasgo inalterable.", "b) Habilidad que se puede aprender y desarrollar.", "c) Tamaño de amígdala.", "d) Pérdida a los 5 años."], correct: 1, retro: "Al ser una habilidad, es responsabilidad del docente entrenarla." },
+            { q: "63. Obstáculos para educación cerebro-compatible:", options: ["a) Interacción social.", "b) Educación deficiente, poco sueño y hábitos tóxicos.", "c) Sentimiento de seguridad.", "d) Uso de TICs."], correct: 1, retro: "Estos factores dificultan la capacidad de adaptación y cambio cerebral." },
+            { q: "64. ¿Por qué la sorpresa es neutral?", options: ["a) Sin reacción.", "b) Valencia depende totalmente del contexto.", "c) No es límbica.", "d) Homeostasis del sueño."], correct: 1, retro: "Puede ser asombro placentero o impacto negativo según la causa." },
+            { q: "65. Gestionar emoción ante estímulo negativo:", options: ["a) Gritar en clase.", "b) Autoconocimiento para interpretar emoción y elegir sentimiento.", "c) Esperar secuestro amigdalar.", "d) Caramelo del botiquín."], correct: 1, retro: "Requiere usar los lóbulos prefrontales para regular la reacción." },
+            { q: "66. Nombre técnico del cambio cerebral por pensamiento:", options: ["a) Imprinting.", "b) Neuroplasticidad.", "c) Poda de axones.", "d) SARA."], correct: 1, retro: "Es la capacidad física del cerebro de modificarse con la experiencia." },
+            { q: "67. Necesario para sostener Downtime:", options: ["a) Luz intensa.", "b) Intervalos de quince minutos.", "c) Repetición mecánica.", "d) Cortisol sanguíneo."], correct: 1, retro: "Permite el procesamiento profundo sin sobrecargar el sistema." },
+            { q: "68. Ubicación de memoria de trabajo:", options: ["a) Tronco cerebral.", "b) Cerebro superior o Lóbulos Prefrontales (LPF).", "c) Lóbulos olfatorios.", "d) Sin ubicación."], correct: 1, retro: "Es la zona del razonamiento consciente inmediato." },
+            { q: "69. ¿Qué sucede al lograr un objetivo placentero?", options: ["a) Disparo de ira.", "b) Activación de serotonina (estado de calma).", "c) Borrado de hipocampo.", "d) Cortisol permanente."], correct: 1, retro: "La serotonina cierra el circuito DAS devolviendo el equilibrio." },
+            { q: "70. Mensaje de Aristóteles sobre redes emocionales:", options: ["a) Ignorarlas.", "b) Son la puerta de entrada a la razón y deben estar niveladas.", "c) Responsables de fracaso.", "d) Solo para selva."], correct: 1, retro: "Educar la mente sin educar el corazón no es educar nada." }
+        ];
+        shuffleOptions(quizData);
+
+        const container = document.getElementById('quiz-container');
+
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `<div class="question-text">${item.q}</div>`;
+            
+            const list = document.createElement('ul');
+            list.className = 'options';
+            
+            item.options.forEach((opt, optIndex) => {
+                const li = document.createElement('li');
+                li.innerText = opt;
+                li.onclick = () => {
+                    const allOptions = list.querySelectorAll('li');
+                    allOptions.forEach(l => l.style.pointerEvents = 'none');
+                    
+                    const feedback = document.getElementById(`feedback-${index}`);
+                    feedback.style.display = 'block';
+                    
+                    if (optIndex === item.correct) {
+                        feedback.innerText = "¡Correcto! " + item.retro;
+                        feedback.className = 'feedback correct';
+                        li.classList.add('selected-correct');
+                    } else {
+                        feedback.innerText = "¡Incorrrecto!";
+                        feedback.className = 'feedback incorrect';
+                        li.classList.add('selected-incorrect');
+                    }
+                };
+                list.appendChild(li);
+            });
+            
+            card.appendChild(list);
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.id = `feedback-${index}`;
+            feedbackDiv.className = 'feedback';
+            card.appendChild(feedbackDiv);
+            container.appendChild(card);
+        });
+    </script>
+</body>
+</html>
